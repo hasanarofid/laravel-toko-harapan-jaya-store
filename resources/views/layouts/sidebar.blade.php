@@ -15,32 +15,26 @@
             </div>
         </div>
 
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-            </div>
-        </form>
-        <!-- /.search form -->
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">HEADER</li>
+            <li class="header">Master</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="{{ url('/home') }}"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-            <li class="active"><a href="{{ route('categories.index') }}"><i class="fa fa-link"></i> <span>Category</span></a></li>
-            <li class="active"><a href="{{ route('products.index') }}"><i class="fa fa-link"></i> <span>Product</span></a></li>
-            <li class="active"><a href="{{ route('customers.index') }}"><i class="fa fa-link"></i> <span>Customer</span></a></li>
-            <li class="active"><a href="{{ route('sales.index') }}"><i class="fa fa-link"></i> <span>Sales</span></a></li>
-            <li class="active"><a href="{{ route('suppliers.index') }}"><i class="fa fa-link"></i> <span>Supplier</span></a></li>
-            <li class="active"><a href="{{ route('productsOut.index') }}"><i class="fa fa-link"></i> <span>Product Out</span></a></li>
-            <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-link"></i> <span>Product In</span></a></li>
+            <li class="active"><a href="{{ url('/home') }}"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
 
 
+            <li class="active"><a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customer</span></a></li>
+            <li class="active"><a href="{{ route('sales.index') }}"><i class="fa fa-user"></i> <span>Sales</span></a></li>
+            <li class="active"><a href="{{ route('suppliers.index') }}"><i class="fa fa-user-circle-o"></i> <span>Supplier</span></a></li>
+
+            <li class="header">Data Barang</li>
+            <li class="active"><a href="{{ route('categories.index') }}"><i class="fa fa-list-ol"></i> <span>Category</span></a></li>
+            <li class="active"><a href="{{ route('products.index') }}"><i class="fa fa-cube"></i> <span>Product</span></a></li>
+            <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-sign-in"></i> <span>Product In</span></a></li>
+            <li class="active"><a href="{{ route('productsOut.index') }}"><i class="fa fa-sign-out"></i> <span>Product Out</span></a></li>
+
+            <li class="header">Laporan</li>
+            <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-address-book"></i> <span>Cetak Laporan</span></a></li>
 
 
 
