@@ -78,13 +78,17 @@
             serverSide: true,
             ajax: "{{ route('api.customers') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'id', name: 'id', orderable: false, searchable: false},
                 {data: 'nama', name: 'nama'},
                 {data: 'alamat', name: 'alamat'},
                 {data: 'email', name: 'email'},
                 {data: 'telepon', name: 'telepon'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
+            ],
+                rowCallback: function(row, data, index) {
+                    // Hitung nomor urut berdasarkan nomor baris data yang diterima dari server
+                    $('td:eq(0)', row).html(index + 1);
+                }
         });
 
         function addForm() {

@@ -65,15 +65,19 @@
 
     <script type="text/javascript">
         var table = $('#categories-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('api.categories') }}",
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('api.categories') }}",
+                columns: [
+                    {data: 'id', name: 'id', orderable: false, searchable: false},
+                    {data: 'name', name: 'name'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                rowCallback: function(row, data, index) {
+                    // Hitung nomor urut berdasarkan nomor baris data yang diterima dari server
+                    $('td:eq(0)', row).html(index + 1);
+                }
+            });
 
         function addForm() {
             save_method = "add";

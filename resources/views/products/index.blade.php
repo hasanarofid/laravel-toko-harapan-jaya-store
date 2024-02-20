@@ -69,14 +69,18 @@
             serverSide: true,
             ajax: "{{ route('api.products') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'id', name: 'id', orderable: false, searchable: false},
                 {data: 'nama', name: 'nama'},
                 {data: 'harga', name: 'harga'},
                 {data: 'qty', name: 'qty'},
                 {data: 'show_photo', name: 'show_photo'},
                 {data: 'category_name', name: 'category_name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
+            ],
+                rowCallback: function(row, data, index) {
+                    // Hitung nomor urut berdasarkan nomor baris data yang diterima dari server
+                    $('td:eq(0)', row).html(index + 1);
+                }
         });
 
         function addForm() {

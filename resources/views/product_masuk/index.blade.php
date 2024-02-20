@@ -73,10 +73,12 @@
                     <th>Export Invoice</th>
                 </tr>
                 </thead>
-
+                @php
+                    $no = 1;
+                @endphp
                 @foreach($invoice_data as $i)
                     <tbody>
-                    <td>{{ $i->id }}</td>
+                    <td>{{ $no++ }}</td>
                     <td>{{ $i->product->nama }}</td>
                     <td>{{ $i->supplier->nama }}</td>
                     <td>{{ $i->qty }}</td>
@@ -159,13 +161,17 @@
             serverSide: true,
             ajax: "{{ route('api.productsIn') }}",
             columns: [
-                {data: 'id', name: 'id'},
+                {data: 'id', name: 'id', orderable: false, searchable: false},
                 {data: 'products_name', name: 'products_name'},
                 {data: 'supplier_name', name: 'supplier_name'},
                 {data: 'qty', name: 'qty'},
                 {data: 'tanggal', name: 'tanggal'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
+            ],
+                rowCallback: function(row, data, index) {
+                    // Hitung nomor urut berdasarkan nomor baris data yang diterima dari server
+                    $('td:eq(0)', row).html(index + 1);
+                }
         });
 
         function addForm() {
