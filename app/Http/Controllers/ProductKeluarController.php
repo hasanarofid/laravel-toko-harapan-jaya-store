@@ -7,6 +7,7 @@ use App\Customer;
 use App\Exports\ExportProdukKeluar;
 use App\Product;
 use App\Product_Keluar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use PDF;
@@ -145,8 +146,19 @@ class ProductKeluarController extends Controller
 
 
 
-    public function apiProductsOut(){
-        $product = Product_Keluar::all();
+    public function apiProductsOut(Request $request){
+
+        $query = Product_Keluar::query();
+       
+        if ($request->tanggal) {
+            $tanggal = $request->input('tanggal');
+            $startDate = Carbon::createFromFormat('Y-m', $tanggal)->startOfMonth();
+            $endDate = Carbon::createFromFormat('Y-m', $tanggal)->endOfMonth();
+          
+            $query->whereBetween('tanggal', [$startDate, $endDate]);
+        }
+    
+        $product = $query->get();
 
         return Datatables::of($product)
             ->addColumn('products_name', function ($product){
@@ -156,8 +168,7 @@ class ProductKeluarController extends Controller
                 return $product->customer->nama;
             })
             ->addColumn('action', function($product){
-                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
-                    '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                return '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
             })
             ->rawColumns(['products_name','customer_name','action'])->make(true);

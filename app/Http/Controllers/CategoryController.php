@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Exports\ExportCategories;
+use App\Product;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Datatables;
 use PDF;
@@ -123,11 +124,18 @@ class CategoryController extends Controller
 
         return Datatables::of($categories)
             ->addColumn('action', function($categories){
-                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
+                return '<a onclick="detailForm('. $categories->id .')" href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
                     '<a onclick="editForm('. $categories->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $categories->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
             })
             ->rawColumns(['action'])->make(true);
+    }
+
+    //detail
+    public function detail($id){
+        $categories = Category::find($id);
+        $produk = Product::where('category_id',$id)->get();
+        return response()->json(['categories' => $categories, 'produk' => $produk]);
     }
 
     public function exportCategoriesAll()

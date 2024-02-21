@@ -26,6 +26,14 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="tanggal">Filter Tanggal:</label>
+                        <input data-date-format='yyyy-mm' type="text" class="form-control" id="tanggal" name="tanggal" required>
+                    </div>
+                </div>
+            </div>
             <table id="products-out-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -45,7 +53,7 @@
 
 
 
-    <div class="box col-md-6">
+    <div class="box col-md-6" style="display: none">
 
         <div class="box-header">
             <h3 class="box-title">Export Invoice</h3>
@@ -75,7 +83,7 @@
                 @endphp
                 @foreach($invoice_data as $i)
                     <tbody>
-                        <td>{{ $np++ }}</td>
+                        <td>{{ $no++ }}</td>
                         <td>{{ $i->product->nama }}</td>
                         <td>{{ $i->customer->nama }}</td>
                         <td>{{ $i->qty }}</td>
@@ -139,7 +147,14 @@
             //Date picker
             $('#tanggal').datepicker({
                 autoclose: true,
+                format: 'yyyy-mm', // Sesuaikan format di sini
+    minViewMode: 'months' // Atur mode untuk memilih bulan saja
                 // dateFormat: 'yyyy-mm-dd'
+            })
+
+            $('#tanggal2').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
             })
 
             //Colorpicker
@@ -158,7 +173,12 @@
         var table = $('#products-out-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('api.productsOut') }}",
+            ajax: {
+        url: "{{ route('api.productsOut') }}",
+        data: function(d) {
+            d.tanggal = $('#tanggal').val(); // Mengirim nilai filter tanggal ke server
+        }
+    },
             columns: [
                 {data: 'id', name: 'id', orderable: false, searchable: false},
                 {data: 'products_name', name: 'products_name'},
@@ -173,6 +193,9 @@
                 }
         });
 
+        $('#tanggal').change(function() {
+    table.draw(); // Menggambar ulang tabel saat nilai filter tanggal berubah
+});
         function addForm() {
             save_method = "add";
             $('input[name=_method]').val('POST');

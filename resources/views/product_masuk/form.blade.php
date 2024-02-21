@@ -36,7 +36,7 @@
 
                         <div class="form-group">
                             <label >Date</label>
-                            <input data-date-format='yyyy-mm-dd' type="text" class="form-control" id="tanggal" name="tanggal"   required>
+                            <input data-date-format='yyyy-mm-dd' type="text" class="form-control" id="tanggal2" name="tanggal"   required>
                             <span class="help-block with-errors"></span>
                         </div>
 

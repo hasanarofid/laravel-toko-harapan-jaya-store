@@ -7,6 +7,7 @@ use App\Exports\ExportProdukMasuk;
 use App\Product;
 use App\Product_Masuk;
 use App\Supplier;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -145,25 +146,32 @@ class ProductMasukController extends Controller
 
 
 
-    public function apiProductsIn(){
-        $product = Product_Masuk::all();
-
+    public function apiProductsIn(Request $request){
+        $query = Product_Masuk::query();
+       
+        if ($request->tanggal) {
+            $tanggal = $request->input('tanggal');
+            $startDate = Carbon::createFromFormat('Y-m', $tanggal)->startOfMonth();
+            $endDate = Carbon::createFromFormat('Y-m', $tanggal)->endOfMonth();
+          
+            $query->whereBetween('tanggal', [$startDate, $endDate]);
+        }
+    
+        $product = $query->get();
+    
         return Datatables::of($product)
-            ->addColumn('products_name', function ($product){
+            ->addColumn('products_name', function ($product) {
                 return $product->product->nama;
             })
-            ->addColumn('supplier_name', function ($product){
+            ->addColumn('supplier_name', function ($product) {
                 return $product->supplier->nama;
             })
-            ->addColumn('action', function($product){
-                return '<a href="#" class="btn btn-info btn-xs"><i class="glyphicon glyphicon-eye-open"></i> Show</a> ' .
-                    '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+            ->addColumn('action', function($product) {
+                return '<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
                     '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a> ';
-
-
             })
-            ->rawColumns(['products_name','supplier_name','action'])->make(true);
-
+            ->rawColumns(['products_name', 'supplier_name', 'action'])
+            ->make(true);
     }
 
     public function exportProductMasukAll()

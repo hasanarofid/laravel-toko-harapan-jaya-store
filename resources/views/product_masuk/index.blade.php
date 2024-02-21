@@ -31,6 +31,15 @@
 
         <!-- /.box-header -->
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="tanggal">Filter Tanggal:</label>
+                        <input data-date-format='yyyy-mm' type="text" class="form-control" id="tanggal" name="tanggal" required>
+                    </div>
+                </div>
+            </div>
+
             <table id="products-in-table" class="table table-striped">
                 <thead>
                 <tr>
@@ -48,7 +57,7 @@
         <!-- /.box-body -->
     </div>
 
-    <div class="box col-md-6">
+    <div class="box col-md-6" style="display: none">
 
         <div class="box-header">
             <h3 class="box-title">Export Invoice</h3>
@@ -61,7 +70,7 @@
     {{--</div>--}}
 
     <!-- /.box-header -->
-        <div class="box-body">
+        <div class="box-body" >
             <table id="invoice" class="table table-striped">
                 <thead>
                 <tr>
@@ -140,7 +149,13 @@
             //Date picker
             $('#tanggal').datepicker({
                 autoclose: true,
-                // dateFormat: 'yyyy-mm-dd'
+                format: 'yyyy-mm', // Sesuaikan format di sini
+    minViewMode: 'months' // Atur mode untuk memilih bulan saja
+            })
+
+            $('#tanggal2').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd',
             })
 
             //Colorpicker
@@ -157,23 +172,31 @@
 
     <script type="text/javascript">
         var table = $('#products-in-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('api.productsIn') }}",
-            columns: [
-                {data: 'id', name: 'id', orderable: false, searchable: false},
-                {data: 'products_name', name: 'products_name'},
-                {data: 'supplier_name', name: 'supplier_name'},
-                {data: 'qty', name: 'qty'},
-                {data: 'tanggal', name: 'tanggal'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ],
-                rowCallback: function(row, data, index) {
-                    // Hitung nomor urut berdasarkan nomor baris data yang diterima dari server
-                    $('td:eq(0)', row).html(index + 1);
-                }
-        });
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: "{{ route('api.productsIn') }}",
+        data: function(d) {
+            d.tanggal = $('#tanggal').val(); // Mengirim nilai filter tanggal ke server
+        }
+    },
+    columns: [
+        {data: 'id', name: 'id', orderable: false, searchable: false},
+        {data: 'products_name', name: 'products_name'},
+        {data: 'supplier_name', name: 'supplier_name'},
+        {data: 'qty', name: 'qty'},
+        {data: 'tanggal', name: 'tanggal'},
+        {data: 'action', name: 'action', orderable: false, searchable: false}
+    ],
+    rowCallback: function(row, data, index) {
+        // Hitung nomor urut berdasarkan nomor baris data yang diterima dari server
+        $('td:eq(0)', row).html(index + 1);
+    }
+});
 
+$('#tanggal').change(function() {
+    table.draw(); // Menggambar ulang tabel saat nilai filter tanggal berubah
+});
         function addForm() {
             save_method = "add";
             $('input[name=_method]').val('POST');

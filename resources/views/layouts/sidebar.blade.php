@@ -33,10 +33,15 @@
             <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-sign-in"></i> <span>Product In</span></a></li>
             <li class="active"><a href="{{ route('productsOut.index') }}"><i class="fa fa-sign-out"></i> <span>Product Out</span></a></li>
 
+        @if(auth()->user()->role == 'admin')
             <li class="header">Laporan</li>
-            <li class="active"><a href="{{ route('productsIn.index') }}"><i class="fa fa-address-book"></i> <span>Cetak Laporan</span></a></li>
-
-
+            <li class="{{ request()->routeIs('api.laporan') ? 'active' : '' }}">
+                <a href="{{ route('api.laporan') }}">
+                    <i class="fa fa-address-book"></i> <span>Cetak Laporan</span>
+                </a>
+            </li>
+        @endif
+        
 
 
 

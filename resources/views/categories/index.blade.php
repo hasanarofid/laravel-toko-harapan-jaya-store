@@ -37,6 +37,7 @@
     </div>
 
     @include('categories.form')
+    @include('categories.detail')
 
 @endsection
 
@@ -85,6 +86,28 @@
             $('#modal-form').modal('show');
             $('#modal-form form')[0].reset();
             $('.modal-title').text('Add Categories');
+        }
+
+        function detailForm(id){
+            $.ajax({
+                url: "{{ route('categories.detail', ['id' => '']) }}/" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(data) {
+                    $('#modal-formdetail').modal('show');
+                        $('.modal-title').text('Produk Category '+data.categories.name);
+                        var productList = $('#product-list');
+                            productList.empty(); // Bersihkan daftar produk sebelum menambahkan produk baru
+
+                            $.each(data.produk, function(index, product) {
+                                var listItem = $('<li>').text(product.nama);
+                                productList.append(listItem);
+                            });
+                },
+                error : function() {
+                    alert("Nothing Data");
+                }
+            });
         }
 
         function editForm(id) {

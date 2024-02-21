@@ -27,6 +27,7 @@ Route::get('dashboard', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories','CategoryController');
+    Route::get('/detail/{id}','CategoryController@detail')->name('categories.detail');
     Route::get('/apiCategories','CategoryController@apiCategories')->name('api.categories');
     Route::get('/exportCategoriesAll','CategoryController@exportCategoriesAll')->name('exportPDF.categoriesAll');
     Route::get('/exportCategoriesAllExcel','CategoryController@exportExcel')->name('exportExcel.categoriesAll');
@@ -64,5 +65,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/exportProductMasukAll','ProductMasukController@exportProductMasukAll')->name('exportPDF.productMasukAll');
     Route::get('/exportProductMasukAllExcel','ProductMasukController@exportExcel')->name('exportExcel.productMasukAll');
     Route::get('/exportProductMasuk/{id}','ProductMasukController@exportProductMasuk')->name('exportPDF.productMasuk');
+
+    // laporan
+    Route::get('/laporan','LaporanController@index')->name('api.laporan');
+    Route::get('getFilteredData', 'LaporanController@getFilteredData')->name('laporan.getFilteredData');
+    Route::get('getFilteredData2', 'LaporanController@getFilteredData2')->name('laporan.getFilteredData2');
 });
 
