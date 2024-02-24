@@ -20,7 +20,7 @@
 
 <body>
 <div class="invoice-box">
-    <table cellpadding="0" cellspacing="0">
+    {{-- <table cellpadding="0" cellspacing="0">
         <tr class="top">
             <td colspan="2">
                 <table>
@@ -32,7 +32,7 @@
                 </table>
             </td>
         </tr>
-    </table>
+    </table> --}}
 
 
         <table border="0" id="table-data" width="80%">
@@ -69,13 +69,13 @@
         {{--<hr  size="2px" color="black" align="left" width="45%">--}}
 
 
-        <table border="0" width="80%">
+        {{-- <table border="0" width="80%">
             <tr align="right">
                 <td>Hormat Kami</td>
             </tr>
-        </table>
+        </table> --}}
 
-    <table border="0" width="80%">
+    {{-- <table border="0" width="80%">
         <tr align="right">
             <td><img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Timothy_Spall_Signature.png" width="100px" height="100px"></td>
         </tr>
@@ -85,5 +85,5 @@
             <tr align="right">
                 <td>Sheptian Bagja Utama</td>
             </tr>
-        </table>
+        </table> --}}
 </div>

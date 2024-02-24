@@ -45,6 +45,7 @@
         <td>ID</td>
         <td>Name</td>
         <td>Address</td>
+        <td>Perusahaan</td>
         <td>Email</td>
     </tr>
     </thead>
@@ -53,6 +54,7 @@
         <tr>
             <td>{{ $s->id }}</td>
             <td>{{ $s->nama }}</td>
+            <td>{{ $s->perusahaan }}</td>
             <td>{{ $s->alamat }}</td>
             <td>{{ $s->email }}</td>
         </tr>

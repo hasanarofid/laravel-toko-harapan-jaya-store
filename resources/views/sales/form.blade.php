@@ -27,6 +27,11 @@
                             <input type="text" class="form-control" id="alamat" name="alamat"   required>
                             <span class="help-block with-errors"></span>
                         </div>
+                        <div class="form-group">
+                            <label >Perusahaan</label>
+                            <input type="text" class="form-control" id="perusahaan" name="perusahaan"  autofocus required>
+                            <span class="help-block with-errors"></span>
+                        </div>
 
                         <div class="form-group">
                             <label >Email</label>

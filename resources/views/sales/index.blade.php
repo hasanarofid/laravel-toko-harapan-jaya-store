@@ -28,6 +28,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
+                    <th>Perusahaan</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th></th>
@@ -77,6 +78,7 @@
                 {data: 'id', name: 'id', orderable: false, searchable: false},
                 {data: 'nama', name: 'nama'},
                 {data: 'alamat', name: 'alamat'},
+                {data: 'perusahaan', name: 'perusahaan'},
                 {data: 'email', name: 'email'},
                 {data: 'telepon', name: 'telepon'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
@@ -110,7 +112,9 @@
                     $('#id').val(data.id);
                     $('#nama').val(data.nama);
                     $('#alamat').val(data.alamat);
+                    $('#perusahaan').val(data.perusahaan);
                     $('#email').val(data.email);
+                    $('#email').attr('readonly',true);
                     $('#telepon').val(data.telepon);
                 },
                 error : function() {

@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->string('nama');
             $table->text('alamat');
+            $table->string('perusahaan');
             $table->string('email');
             $table->string('telepon');
             $table->timestamps();

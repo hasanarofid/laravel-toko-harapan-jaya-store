@@ -18,6 +18,7 @@ class SalesImport implements ToModel, WithHeadingRow
         return new Sale([
             'nama'          => $row['nama'],
             'alamat'        => $row['alamat'],
+            'perusahaan'        => $row['perusahaan'],
             'email'         => $row['email'],
             'telepon'       => $row['telepon']
         ]);
